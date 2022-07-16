@@ -15,7 +15,8 @@ class GlobalApp {
     static mensaje_registro_no = "No hay registro";
     static mensaje_error_registros = "No existen registros";
     static mensaje_error_proceso = "Proceso no encontrado";
-    static mensaje_aprobar_proceso= "Proceso aprobado con exito";
+    static mensaje_aprobar_proceso = "Proceso aprobado con exito";
+    static mensaje_botellas_max_error = "El número de botellas especiales debe ser menor a las producidas";
     //errors
     static mensaje_error_500 = "Ocurrió un problema, intente más tarde.";
     static mensaje_error_404 = "Ruta no encontrada";
