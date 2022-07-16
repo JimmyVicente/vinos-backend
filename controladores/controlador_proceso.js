@@ -148,6 +148,7 @@ exports.crear_editar_proceso = async function (req, res) {
                 let { nro_lote, nro_botellas, nro_botellas_especiales } = req.body;
                 var data = { nro_lote, nro_botellas, nro_botellas_especiales };
                 UtilApi.validarCampos(data);
+                if (nro_botellas_especiales > nro_botellas) throw { mensaje: GlobalApp.mensaje_botellas_max_error }
                 var _id = proceso_validar.envasado?._id;
                 if (_id != undefined) {
                     await Envasado.updateOne({ _id }, data);
