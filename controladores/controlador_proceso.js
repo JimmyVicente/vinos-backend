@@ -75,7 +75,8 @@ exports.crear_editar_proceso = async function (req, res) {
                     await MateriaPrima.updateOne({ _id }, { nro_cosecha, lugar_procedencia, nombre_propietario, gadros_brix });
                 } else {
                     var materia_prima = await MateriaPrima.create({ nro_cosecha, lugar_procedencia, nombre_propietario, gadros_brix });
-                    await Proceso.create({ materia_prima: materia_prima._id });
+                    var proceso_c = await Proceso.create({ materia_prima: materia_prima._id });
+                    id_proceso = proceso_c._id;
                 }
                 break;
             case 2:
@@ -158,7 +159,7 @@ exports.crear_editar_proceso = async function (req, res) {
             default:
                 throw { mensaje: GlobalApp.mensaje_error_proceso };
         }
-        UtilApi.succeesServer(req, res, null, GlobalApp.mensaje_guardar_ok);
+        UtilApi.succeesServer(req, res, id_proceso, GlobalApp.mensaje_guardar_ok);
     } catch (error) {
         UtilApi.errorServer(req, res, error);
     }
