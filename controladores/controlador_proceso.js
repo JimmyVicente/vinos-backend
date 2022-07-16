@@ -212,7 +212,7 @@ exports.aprobar_proceso = async function (req, res) {
             default:
                 throw { mensaje: GlobalApp.mensaje_error_proceso };
         }
-        UtilApi.succeesServer(req, res, null, GlobalApp.mensaje_aprobar_proceso);
+        UtilApi.succeesServer(req, res, id_proceso, GlobalApp.mensaje_aprobar_proceso);
     } catch (error) {
         UtilApi.errorServer(req, res, error);
     }
