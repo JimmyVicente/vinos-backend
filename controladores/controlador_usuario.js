@@ -91,9 +91,12 @@ async function encontrar_usuario(id_usuario) {
     UtilApi.validarCampos({ id_usuario });
     try {
         var usuario = await Usuario.findOne({ _id: id_usuario });
-        if (usuario == undefined) throw { mensaje: GlobalApp.mensaje_error_proceso, error: error }
+        if (usuario == undefined) usuario = await Usuario.findOne({ billetera: id_usuario });
+        if (usuario == undefined) throw { mensaje: GlobalApp.mensaje_error_proceso }
         return usuario;
     } catch (error) {
-        throw { mensaje: GlobalApp.mensaje_error_usuario, error: error }
+        var usuario = await Usuario.findOne({ billetera: id_usuario });
+        if (usuario == undefined) throw { mensaje: GlobalApp.mensaje_error_proceso, error: error }
+        return usuario;
     }
 }
