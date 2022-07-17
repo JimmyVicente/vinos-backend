@@ -231,6 +231,7 @@ async function encontrar_proceso(id_proceso) {
             .populate("clarificacion")
             .populate("trasiego")
             .populate("envasado");
+        if (proceso == undefined) throw { mensaje: GlobalApp.mensaje_error_proceso, error: error }
         return proceso;
     } catch (error) {
         throw { mensaje: GlobalApp.mensaje_error_proceso, error: error }

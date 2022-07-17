@@ -3,7 +3,7 @@
 class GlobalApp {
     //config globals
     static link = '';
-    static imprimir_logs = false;
+    static imprimir_logs = true;
     static domain = "api";
     //success
     static mensaje_bienvenido = "¡Bienvenido!";
@@ -15,6 +15,7 @@ class GlobalApp {
     static mensaje_registro_no = "No hay registro";
     static mensaje_error_registros = "No existen registros";
     static mensaje_error_proceso = "Proceso no encontrado";
+    static mensaje_error_usuario = "Usuario no encontrado";
     static mensaje_aprobar_proceso = "Proceso aprobado con exito";
     static mensaje_botellas_max_error = "El número de botellas especiales debe ser menor a las producidas";
     //errors
