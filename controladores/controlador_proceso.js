@@ -219,6 +219,27 @@ exports.aprobar_proceso = async function (req, res) {
     }
 };
 
+/** @api {post} /proceso/firmar_proceso Firmar proceso
+ @apiName Firmar proceso
+ @apiGroup controlador.proceso
+ @apiDescription Permite firmar proceso
+ @apiParam {String} email Correo electrónico o número de celular.
+ @apiSuccess {Object} object { message: "¡Bienvenido!" }
+ @apiError {Object} object { "name": "ValidationError", "status": 400, "message": "Datos incorrectos" }
+ @apiError {Object} object { "name": "ValidationError", "status": 400, "message": "Cuenta inactiva" }*/
+exports.firmar_proceso = async function (req, res) {
+    try {
+        let { id_proceso } = req.body;
+        UtilApi.validarCampos({ id_proceso });
+        await encontrar_proceso(id_proceso);
+        await Proceso.updateOne({ _id: id_proceso }, { aprobado: true });
+        UtilApi.succeesServer(req, res, id_proceso, GlobalApp.mensaje_aprobar_proceso);
+    } catch (error) {
+        UtilApi.errorServer(req, res, error);
+    }
+};
+
+
 
 async function encontrar_proceso(id_proceso) {
     UtilApi.validarCampos({ id_proceso });
