@@ -229,10 +229,10 @@ exports.aprobar_proceso = async function (req, res) {
  @apiError {Object} object { "name": "ValidationError", "status": 400, "message": "Cuenta inactiva" }*/
 exports.firmar_proceso = async function (req, res) {
     try {
-        let { id_proceso } = req.body;
-        UtilApi.validarCampos({ id_proceso });
+        let { id_proceso, hash } = req.body;
+        UtilApi.validarCampos({ id_proceso, hash });
         await encontrar_proceso(id_proceso);
-        await Proceso.updateOne({ _id: id_proceso }, { aprobado: true });
+        await Proceso.updateOne({ _id: id_proceso }, { aprobado: true, hash });
         UtilApi.succeesServer(req, res, id_proceso, GlobalApp.mensaje_aprobar_proceso);
     } catch (error) {
         UtilApi.errorServer(req, res, error);

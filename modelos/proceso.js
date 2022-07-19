@@ -33,6 +33,10 @@ const roleSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  hash: {
+    type: String,
+    trim: true
+  },
 },
   {
     timestamps: true,
