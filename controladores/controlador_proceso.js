@@ -210,7 +210,7 @@ exports.aprobar_proceso = async function (req, res) {
             case 7:
                 var _id = proceso_validar.envasado?._id;
                 var envasado = proceso_validar.envasado;
-                if (envasado.botellas.length == 0) {
+                if (envasado.botellas == undefined || envasado.botellas.length == 0) {
                     var botellas = [];
                     for (let index = 0; index < envasado.nro_botellas_especiales; index++) {
                         var data = {
