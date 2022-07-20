@@ -1,11 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const roleSchema = new Schema({
-  nro_botella: {
-    type: Number,
-    required: true,
-  },
-  hash_botella: {
+  id_proceso: {
     type: String,
     required: true,
   },

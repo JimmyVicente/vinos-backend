@@ -18,6 +18,7 @@ class GlobalApp {
     static mensaje_error_usuario = "Usuario no encontrado";
     static mensaje_aprobar_proceso = "Proceso aprobado con exito";
     static mensaje_botella_encontrada = "Botella encontrada";
+    static mensaje_botella_actualizada = "Botella actualizada";
     static mensaje_botellas_max_error = "El número de botellas especiales debe ser menor a las producidas";
     //errors
     static mensaje_error_500 = "Ocurrió un problema, intente más tarde.";
