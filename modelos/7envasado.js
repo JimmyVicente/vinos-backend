@@ -16,27 +16,7 @@ const roleSchema = new Schema({
   },
   botellas: [
     {
-      nro_botella: {
-        type: Number,
-        required: true,
-      },
-      hash_botella: {
-        type: String,
-        required: true,
-      },
-      estados: [
-        {
-          fecha: {
-            type: Date,
-            required: true,
-            trim: true,
-          },
-          estado: {
-            type: String,
-            required: true,
-          },
-        }
-      ],
+      botella: { type: Schema.Types.ObjectId, ref: "botella" },
     },
   ],
   aprobado: {

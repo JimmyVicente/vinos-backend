@@ -1,3 +1,4 @@
+var sha256 = require('sha256');
 //Models
 var MateriaPrima = require('../modelos/1materia_prima');
 var Extraccion = require('../modelos/2extraccion');
@@ -7,6 +8,7 @@ var Clarificacion = require('../modelos/5clarificacion');
 var Trasiego = require('../modelos/6trasiego');
 var Envasado = require('../modelos/7envasado');
 var Proceso = require('../modelos/proceso');
+var Botella = require('../modelos/botella');
 //Modules
 var GlobalApp = require('../global/global_app');
 var UtilApi = require('../utils/util_api');
@@ -207,8 +209,20 @@ exports.aprobar_proceso = async function (req, res) {
                 break;
             case 7:
                 var _id = proceso_validar.envasado?._id;
-                // var envasado = proceso_validar.envasado;
-                await Envasado.updateOne({ _id }, { aprobado: true });
+                var envasado = proceso_validar.envasado;
+                if (envasado.botellas.length == 0) {
+                    var botellas = [];
+                    for (let index = 0; index < envasado.nro_botellas_especiales; index++) {
+                        var data = {
+                            nro_botella: (index + 1),
+                            hash_botella: "0x" + sha256(`${JSON.stringify(proceso_validar)}${index}`),
+                            estados: [{ fecha: new Date(), estado: "Empacado" }]
+                        };
+                        var botella = await Botella.create(data);
+                        botellas.push({ botella: botella._id });
+                    }
+                    await Envasado.updateOne({ _id }, { aprobado: true, botellas });
+                }
                 break;
             default:
                 throw { mensaje: GlobalApp.mensaje_error_proceso };
@@ -231,9 +245,28 @@ exports.firmar_proceso = async function (req, res) {
     try {
         let { id_proceso, hash } = req.body;
         UtilApi.validarCampos({ id_proceso, hash });
-        await encontrar_proceso(id_proceso);
         await Proceso.updateOne({ _id: id_proceso }, { aprobado: true, hash });
         UtilApi.succeesServer(req, res, id_proceso, GlobalApp.mensaje_aprobar_proceso);
+    } catch (error) {
+        UtilApi.errorServer(req, res, error);
+    }
+};
+
+/** @api {post} /proceso/firmar_proceso Firmar proceso
+ @apiName Firmar proceso
+ @apiGroup controlador.proceso
+ @apiDescription Permite firmar proceso
+ @apiParam {String} email Correo electrónico o número de celular.
+ @apiSuccess {Object} object { message: "¡Bienvenido!" }
+ @apiError {Object} object { "name": "ValidationError", "status": 400, "message": "Datos incorrectos" }
+ @apiError {Object} object { "name": "ValidationError", "status": 400, "message": "Cuenta inactiva" }*/
+exports.econtrar_proceso_botella = async function (req, res) {
+    try {
+        let { hash } = req.body;
+        UtilApi.validarCampos({ hash });
+        var result = await Envasado.find({ botellas: { $elemMatch: { hash_botella: 'hash' } } });
+        console.log(result);
+        UtilApi.succeesServer(req, res, hash, GlobalApp.mensaje_botella_encontrada);
     } catch (error) {
         UtilApi.errorServer(req, res, error);
     }
