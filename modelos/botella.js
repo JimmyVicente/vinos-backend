@@ -5,6 +5,10 @@ const roleSchema = new Schema({
     type: String,
     required: true,
   },
+  nro_botella: {
+    type: Number,
+    required: true,
+  },
   estados: [
     {
       fecha: {

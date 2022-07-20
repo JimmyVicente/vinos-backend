@@ -214,6 +214,7 @@ exports.aprobar_proceso = async function (req, res) {
                     var botellas = [];
                     for (let index = 0; index < envasado.nro_botellas_especiales; index++) {
                         var data = {
+                            nro_botella: index + 1,
                             id_proceso: id_proceso,
                             estados: [{ fecha: new Date(), estado: "Empacado" }]
                         };
