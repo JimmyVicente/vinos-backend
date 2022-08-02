@@ -287,8 +287,9 @@ exports.cambiar_estado_botella = async function (req, res) {
         var botella = await Botella.findOne({ _id: hash_botella });
         var estados = botella.estados;
         var length = estados.length;
+        if (length == 0) estados.push({ fecha: new Date(), estado: "Empacado" });
         if (length == 1) estados.push({ fecha: new Date(), estado: "Vendido" });
-        if (length == 2) estados.push({ fecha: new Date(), estado: "Token Asignado" });
+        if (length == 2) estados.push({ fecha: new Date(), estado: "Token asignado" });
         await Botella.updateOne({ _id: botella._id }, { estados });
         UtilApi.succeesServer(req, res, null, GlobalApp.mensaje_botella_actualizada);
     } catch (error) {
