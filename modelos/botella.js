@@ -20,6 +20,10 @@ const roleSchema = new Schema({
         type: String,
         required: true,
       },
+      billetera: {
+        type: String,
+        required: true,
+      },
     }
   ],
 },
